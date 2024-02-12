@@ -1,0 +1,92 @@
+
+
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mangalam           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.37 sec)
+
+
+mysql> use mangalam;
+Database changed
+mysql> show databases;select*from Emp;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| information_schema |
+| mangalam           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+
+----INSERT 5 RECORDS AND CALCULAE GrossPay AND NetPay----
+
+
++-------+---------+-----------+----------+----------+----------+---------+----------+--------+
+| empNo | EmpName | job       | Basic    | DA       | HRA      | PF      | GrossPay | NetPay |
++-------+---------+-----------+----------+----------+----------+---------+----------+--------+
+|     1 | Anandu  | Manager   | 50000.00 | 15000.00 | 20000.00 | 5000.00 | 90000.00 |   NULL |
+|     2 | Aswini  | Developer | 40000.00 | 12000.00 | 16000.00 | 4000.00 | 72000.00 |   NULL |
+|     3 | Nandhu  | Analyst   | 30000.00 |  9000.00 | 12000.00 | 3000.00 | 54000.00 |   NULL |
+|     4 | Eva     | Designer  | 35000.00 | 10500.00 | 14000.00 | 3500.00 | 63000.00 |   NULL |
+|     5 | Michel  | Tester    | 32000.00 |  9600.00 | 12800.00 | 3200.00 | 57600.00 |   NULL |
++-------+---------+-----------+----------+----------+----------+---------+----------+--------+
+5 rows in set (0.03 sec)
+
+
+
+---DISPLAY THE EMPLOYEES WHOSE BASIC IS LOWEST IN EACH DEPARTMENT---
+
+mysql> SELECT MIN(Basic) FROM Emp GROUP BY Job;
++------------+
+| MIN(Basic) |
++------------+
+|   50000.00 |
+|   40000.00 |
+|   30000.00 |
+|   35000.00 |
+|   32000.00 |
++------------+
+5 rows in set (0.08 sec)
+
+---IF NetPay IS LESSTHAN RS 10,000 ADD RS 1200 AS SPECIAL ALLOWANCES---
+
+
+mysql> UPDATE EMP SET NetPAY =NetPay +1200 WHERE NetPay<10000;
+Query OK, 0 rows affected (0.08 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+
+-------DISPLAY WHOSE EMP  WHOSE GrossPay LIES BETWEEN10000  AND20000
+
+
+mysql> SELECT EmpNo,EmpName,Job,GrossPay FROM Emp WHERE GrossPay BETWEEN 10000 AND 20000;
+
+Empty set (0.06 sec)
+
+
+
+
+
+----DISPLAY EMPLOYEES WHO EARN MAXIMUM SALARY----
+
+mysql> SELECT MAX(Basic) FROM Emp;
++------------+
+| MAX(Basic) |
++------------+
+|   50000.00 |
++------------+
+1 row in set (0.00 sec)

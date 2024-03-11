@@ -1,0 +1,35 @@
+create table customers(id int,name varchar(20),dpmt varchar(20),salary int);
+Table created.
+insert into customers values(1,'sam','cs',2000);
+1 row created.
+ insert into customers values(2,'tam','it',3000);
+1 row created.
+insert into customers values(3,'ram','ec',2500);
+1 row created.
+ insert into customers values(4,'kam','mca',5000);
+1 row created.
+select * from customers;
+        ID NAME                 DPMT                     SALARY
+---------- -------------------- -------------------- ----------
+         1 sam                  cs                         2000
+         2 tam                  it                         3000
+         3 ram                  ec                         2500
+         4 kam                  mca                        5000
+CREATE OR REPLACE FUNCTION totalCustomers
+        RETURN number IS
+           total number(2) := 0;
+        BEGIN
+           SELECT count(*) into total
+           FROM customers;
+            RETURN total;
+       END;
+      /
+Function created.
+  DECLARE
+          c number(2);
+        BEGIN
+           c := totalCustomers();
+           dbms_output.put_line('Total no. of Customers: ' || c);
+        END;
+        /
+Total no. of Customers: 4

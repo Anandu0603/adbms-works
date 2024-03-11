@@ -1,0 +1,20 @@
+create table stud(sid int,sname varchar(20),sdpmt varchar(20),marks int);
+Table created.
+ insert into stud values(1,'sam','cse',20);
+1 row created.
+ insert into stud values(2,'tam','it',30);
+1 row created.
+ select * from stud;
+       SID SNAME                SDPMT                     MARKS
+---------- -------------------- -------------------- ----------
+         1 sam                  cse                          20
+         2 tam                  it                           30
+ create or replace trigger studtrig after insert on stud
+    begin
+    dbms_output.put_line('inserted');
+    end;
+    /
+Trigger created.
+insert into stud values(3,'wam','ec',39);
+inserted
+1 row created.

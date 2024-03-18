@@ -1,0 +1,51 @@
+
+
+//creating database university
+
+
+  test> use university
+  switched to db university
+  university> db.createCollection("department")
+  { ok: 1 }
+  university> db.createCollection("employee")
+
+//create two table employee and department
+
+      university> db.createCollection("department")
+    { ok: 1 }
+    university> db.createCollection("employee")
+
+
+//insert 6 recors to department with empl id,empname,empdepartmnt,salary//
+
+
+university> db.department.insertOne({"empid":101,"empname":"Aswini","empdept":"ceo","salary":"100000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf202')
+}
+university> db.department.insertOne({"empid":102,"empname":"Anandu","empdept":"gm","salary":"10000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf203')
+}
+university> db.department.insertOne({"empid":103,"empname":"aliya","empdept":"manager","salary":"15000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf203')
+}
+university> db.department.insertOne({"empid":104,"empname":"divya","empdept":"teacher","salary":"12000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf204')
+}
+university> db.department.insertOne({"empid":105,"empname":"rahul","empdept":"clerk","salary":"80000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf205')
+}
+university> db.department.insertOne({"empid":106,"empname":"aliya","empdept":"manager","salary":"15000"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f80f5c8a0a24861e8bf203')
+}

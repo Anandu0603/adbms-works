@@ -1,0 +1,10 @@
+student> show collections
+dbms
+student> db.dbms.find().pretty()
+[
+  {
+    _id: ObjectId('65f802673425939d7e8bf202'),
+    rollno: 1,
+    name: 'Aswini'
+  }
+]

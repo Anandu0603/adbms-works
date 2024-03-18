@@ -1,0 +1,11 @@
+
+updatingtable contents in db
+
+student> db.dbms.updateOne({rollno:1},{$set:{name:"anandu"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}

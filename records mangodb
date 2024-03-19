@@ -49,3 +49,6 @@ university> db.department.insertOne({"empid":106,"empname":"aliya","empdept":"ma
   acknowledged: true,
   insertedId: ObjectId('65f80f5c8a0a24861e8bf203')
 }
+
+
+

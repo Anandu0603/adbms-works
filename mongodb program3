@@ -332,6 +332,38 @@ college> db.s2mca.find({sub:/che/});
     div: 'A',
     sub: [ 'phy', 'che' ]
   }
+// Find collage with subjects containing "ENG"
+db.collage.find({ sub: /ENG/ });
+
+        OUTPUT
+ollege>  db.s2mca.find({ sub: /eng/ });
+[
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
+4.// Case-insensitive search for students with "june" in their name
+db.s2mca.find({name:/aswini/i});
+
+      OUTPUT
+college>  db.s2mca.find({name:/aswini/i});
+[
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
 
 
 

@@ -1,0 +1,337 @@
+Mongo 3
+1.Create database named college,collection named s2mca
+use college
+db.createCollection("stud")
+with fields roll,name,age,division,subject,gender
+
+OUTPUT
+
+test> use college
+switched to db college
+college> db.createCollection("stud")
+{ ok: 1 }
+
+2.Insert data
+
+college> db.s2mca.insert({roll:1,name:'ram',age:20,div:'A',sub:['phy','che']})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66135b5a398dcd79db8bf202') }
+}
+college> db.s2mca.insert({roll:2,name:'anandu',age:23,div:'b',sub:['phy','mat']})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66135b8e398dcd79db8bf203') }
+}
+college> db.s2mca.insert({roll:3,name:'aswini',age:22,div:'c',sub:['phy','eng']})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66135bbc398dcd79db8bf204') }
+}
+
+db.s2mca.find()
+
+                                        OUTPUT
+
+college> db.s2mca.find()
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  },
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
+3. Display total number of students in one section
+db.s2mca.aggregate([{$match:{div:'A'}},{$count:'total stud in A'}]);
+
+
+        OUTPUT
+college> db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
+
+[
+  { _id: 'A', total_st: 1, max_age: 20 },
+  { _id: 'c', total_st: 1, max_age: 22 },
+  { _id: 'b', total_st: 1, max_age: 23 }
+]
+
+4. Displaying the total number of students in both the sections and maximum age from both
+section
+db.s2mca.aggregate([{$group:{_id:'$div',total_st:{$sum:1},max_age:{$max:'$age'}}}])
+
+
+
+          OUTPUT
+ {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+
+5. Displaying details of students whose age is greater than 30 using match stage
+db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+
+              OUTPUT
+college> db.s2mca.aggregate([{$match:{age:{$gt:20}}}])
+[
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
+
+6. Sorting the students on the basis of age
+db.s2mca.aggregate([{'$sort':{'age':1}}])
+
+            OUTPUT
+
+db.s2mca.aggregate([{'$sort':{'age':1}}])
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  },
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  }
+]
+
+
+7. Sorting the students on the basis of age in descending order
+db.s2mca.aggregate([{'$sort':{'age':-1}}])
+
+
+OUTPUT
+college> db.s2mca.aggregate([{'$sort':{'age':-1}}])
+[
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  },
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+
+8. Displaying details of a student having the largest age in the section – B
+db.s2mca.aggregate([{$match:{div:"A"}},{'$sort':{'age':-1}},{$limit:1}]
+
+                OUTPUT
+
+college> db.s2mca.aggregate([{$match:{div:"A"}},{'$sort':{'age':-1}},{$limit:1}])
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+
+9. Unwinding students on the basis of subject
+db.s2mca.aggregate([{$unwind:'$sub'}]
+
+        OUTPUT
+
+
+      college> db.s2mca.aggregate([{$unwind:'$sub'}])
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: 'che'
+  },
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: 'mat'
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: 'phy'
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: 'eng'
+  }
+
+10.Calculate average age of students
+db.s2mca.aggregate([{$group:{_id:'roll',averageAge:{$avg:'$age'}}}]);
+
+
+              OUTPUT
+
+
+          college> db.s2mca.aggregate([{$group:{_id:'roll',averageAge:{$avg:'$age'}}}]);
+[ { _id: 'roll', averageAge: 21.666666666666668 } ]
+
+12.Find courses with highest number of credit
+db.s2mca.aggregate([{$sort:{credit:-1}},{$limit:1}]
+
+                OUTPUT
+      college> db.s2mca.aggregate([{$sort:{credit:-1}},{$limit:1}])
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+]
+
+
+Regular expression
+1. Find students that names start with a
+db.s2mca.find({name:/^j/});
+
+        OUTPUT
+college>  db.s2mca.find({name:/^a/});
+[
+  {
+    _id: ObjectId('66135b8e398dcd79db8bf203'),
+    roll: 2,
+    name: 'anandu',
+    age: 23,
+    div: 'b',
+    sub: [ 'phy', 'mat' ]
+  },
+  {
+    _id: ObjectId('66135bbc398dcd79db8bf204'),
+    roll: 3,
+    name: 'aswini',
+    age: 22,
+    div: 'c',
+    sub: [ 'phy', 'eng' ]
+  }
+]
+
+2. Find course which contain subject ‘chemistry’
+db.s2mca.find({sub:/che/});
+
+            OUTPUT
+
+college> db.s2mca.find({sub:/che/});
+[
+  {
+    _id: ObjectId('66135b5a398dcd79db8bf202'),
+    roll: 1,
+    name: 'ram',
+    age: 20,
+    div: 'A',
+    sub: [ 'phy', 'che' ]
+  }
+
+
+
